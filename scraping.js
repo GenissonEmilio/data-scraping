@@ -7,17 +7,17 @@ try {
         const page = await browser.newPage();
     
         //Acessa a pagina de login da steam
-        await page.goto('https://secure.nuuvem.com/br-pt/account/login');
+        await page.goto('https://store.steampowered.com/login/');
         console.log('Faça login manualmente e pressione Enter quando estiver pronto.')
         process.stdin.once('data', async () => {
             //Pagina de historico de compras
-            await page.goto('https://secure.nuuvem.com/br-pt/account/orders');
+            await page.goto('https://store.steampowered.com/account/history/');
             await page.waitForSelector('.=store-orders-item-header-col-subtitle', { timeout: 6000 });
     
             //Extrair os valores de gastos
             const totalSpent = await page.evaluate(() => {
                 let total = 0;
-                const elements = document.querySelectorAll('.store-orders-item-header-col-subtitle');
+                const elements = document.querySelectorAll('.wht_total');
             
                 if (elements.length === 0) {
                     return 'Erro: Nenhum valor encontrado';
@@ -42,7 +42,7 @@ try {
             };
     
             console.log(`Total gasto: R$ ${totalSpent}`)
-            fs.writeFileSync('dadosNuvem.json', JSON.stringify(dados, null, 2), 'utf-8');
+            fs.writeFileSync('dadosSteam.json', JSON.stringify(dados, null, 2), 'utf-8');
             console.log('Arquivos salvos com sucesso');
     
             await browser.close();

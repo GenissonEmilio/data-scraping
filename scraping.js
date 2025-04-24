@@ -12,7 +12,7 @@ try {
         process.stdin.once('data', async () => {
             //Pagina de historico de compras
             await page.goto('https://store.steampowered.com/account/history/');
-            await page.waitForSelector('.=store-orders-item-header-col-subtitle', { timeout: 6000 });
+            await page.waitForSelector('.wht_total', { timeout: 6000 });
     
             //Extrair os valores de gastos
             const totalSpent = await page.evaluate(() => {
